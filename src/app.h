@@ -8,17 +8,18 @@
 class Controls;
 
 class App{
-    SDL_Window* window = nullptr;
-    Controls* controls;
-
-    bool running = true;
-    static inline const int WIDTH = 640;
-    static inline const int HEIGHT = 480;
 public:
     App();
     ~App();
     void run();
     void quit();
+    static inline const int WIDTH = 720+200;
+    static inline const int HEIGHT = 720;
+private:
+    SDL_Window* window = nullptr;
+    Controls* controls;
+
+    bool running = true;
 
 };
 

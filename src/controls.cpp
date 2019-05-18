@@ -16,4 +16,7 @@ void Controls::handleEvent(SDL_Event& e)
     if(e.type == SDL_QUIT){
         app->quit();
     }
+    else if(e.type == SDL_MOUSEBUTTONDOWN){
+        g_simulation->handleClick(e.button.x, e.button.y);
+    }
 }

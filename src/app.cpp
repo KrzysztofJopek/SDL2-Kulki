@@ -1,7 +1,9 @@
 #include "app.h"
+#include "simulation.h"
 #include <SDL2/SDL_image.h>
 
 SDL_Renderer* g_renderer;
+Simulation* g_simulation;
 
 App::App()
 {
@@ -12,6 +14,7 @@ App::App()
         ERROR();
 
     controls = new Controls(this);
+    g_simulation = new Simulation();
 
     window = SDL_CreateWindow(
             "SDL2 Pong Game",
@@ -48,6 +51,7 @@ void App::run()
         tick1 = tick2;
 
         controls->handleEvents();
+        g_simulation->render();
     }
 }
 
