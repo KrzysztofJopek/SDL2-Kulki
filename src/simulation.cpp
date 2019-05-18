@@ -28,6 +28,6 @@ void Simulation::handleClick(int x, int y)
         game->handleClick(x,y);
     }
     else{
-        bar->handleClick(x-bar->getRect().x, y);
+        bar->handleClick(x, y);
     }
 }
