@@ -3,3 +3,5 @@
 ```
 make
 ```
+## Dependecny
+SDL2
