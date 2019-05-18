@@ -1,5 +1,5 @@
 # SDL2-Kulki
-# Instlation
+## How to compile
 ```
 make
 ```
