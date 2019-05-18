@@ -3,16 +3,17 @@
 #include <SDL2/SDL.h>
 
 #include "global.h"
-#include "renderer.h"
 #include "controls.h"
 
 class Controls;
 
 class App{
-    Renderer* renderer;
+    SDL_Window* window = nullptr;
     Controls* controls;
 
     bool running = true;
+    static inline const int WIDTH = 640;
+    static inline const int HEIGHT = 480;
 public:
     App();
     ~App();

@@ -1,24 +1,40 @@
 #include "app.h"
 #include <SDL2/SDL_image.h>
 
+SDL_Renderer* g_renderer;
 
 App::App()
 {
     if(SDL_Init(SDL_INIT_VIDEO) == -1)
-        ERROR("Can't init\n");
-
-    renderer = new Renderer();
-
+        ERROR();
     int imgFlags = IMG_INIT_PNG;
     if(!(IMG_Init(imgFlags) & imgFlags))
-        ERROR("Can't init IMG\n");
+        ERROR();
 
     controls = new Controls(this);
+
+    window = SDL_CreateWindow(
+            "SDL2 Pong Game",
+            SDL_WINDOWPOS_UNDEFINED,
+            SDL_WINDOWPOS_UNDEFINED,
+            App::WIDTH,
+            App::HEIGHT,
+            SDL_WINDOW_SHOWN);
+    if(!window)
+        ERROR();
+
+    g_renderer = SDL_CreateRenderer(
+            window,
+            -1,
+            SDL_RENDERER_ACCELERATED);
+    if(!g_renderer)
+        ERROR();
 }
 
 App::~App()
 {
-    delete renderer;
+    SDL_DestroyRenderer(g_renderer);
+    SDL_DestroyWindow(window);
     delete controls;
 }
 
