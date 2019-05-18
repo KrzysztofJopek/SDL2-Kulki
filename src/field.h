@@ -15,6 +15,7 @@ public:
     bool hasBall();
     int getX();
     int getY();
+    bool hasSameColor(Field* field);
 
 private:
     Ball* ball;

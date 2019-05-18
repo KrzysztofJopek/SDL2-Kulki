@@ -42,6 +42,14 @@ bool Field::hasBall()
     return ball;
 }
 
+bool Field::hasSameColor(Field* field)
+{
+    if(field->hasBall() && this->hasBall()){
+        return field->ball->color.color == this->ball->color.color;
+    }
+    return false;
+}
+
 bool Field::moveBall(Field* field)
 {
     if(!field || !ball)

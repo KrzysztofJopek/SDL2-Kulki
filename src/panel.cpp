@@ -72,6 +72,87 @@ bool GamePanel::checkNextPos(int Ax, int Ay, int Bx, int By, bool map[9][9])
     return false;
 }
 
+void GamePanel::checkForLine(int x, int y)
+{
+    Field* field = board[x][y];
+    bool destroy = false;
+    int max = 1;
+    bool map[9][9] = {0,}; 
+    map[x][y] = true;
+    int help = 1;
+    while(x-help >= 0 && field->hasSameColor(board[x-help][y])){
+        max++;
+        map[x-help][y] = true;
+        help++;
+    }
+    help = 1;
+    while(x+help < 9 && field->hasSameColor(board[x+help][y])){
+        max++;
+        map[x+help][y] = true;
+        help++;
+    }
+    help = 1;
+    if(max >= 5)
+        destroy = true;
+    max = 1;
+    while(y-help >= 0 && field->hasSameColor(board[x][y-help])){
+        max++;
+        map[x][y-help] = true;
+        help++;
+    }
+    help = 1;
+    while(y+help < 9 && field->hasSameColor(board[x][y+help])){
+        max++;
+        map[x][y+help] = true;
+        help++;
+    }
+    help = 1;
+    if(max >= 5)
+        destroy = true;
+    max = 1;
+    while(x-help >= 0 && y-help >= 0 && field->hasSameColor(board[x-help][y-help])){
+        max++;
+        map[x-help][y-help] = true;
+        help++;
+    }
+    help = 1;
+    while(x+help < 9 && y+help < 9 && field->hasSameColor(board[x+help][y+help])){
+        max++;
+        map[x+help][y+help] = true;
+        help++;
+    }
+    help = 1;
+    if(max >= 5)
+        destroy = true;
+    max = 1;
+    while(y-help >= 0 && x+help < 9 && field->hasSameColor(board[x+help][y-help])){
+        max++;
+        map[x+help][y-help] = true;
+        help++;
+    }
+    help = 1;
+    while(y+help < 9 && x-help >= 0 && field->hasSameColor(board[x][y+help])){
+        max++;
+        map[x-help][y+help] = true;
+        help++;
+    }
+    if(destroy)
+        destroyFromMap(map);
+}
+
+void GamePanel::destroyFromMap(bool map[9][9])
+{
+    for(int x=0; x<N; x++){
+        for(int y=0; y<N; y++){
+            if(map[x][y]){
+                board[x][y]->destroyBall();
+                balls--;
+            }
+        }
+    }
+
+}
+
 GamePanel::~GamePanel()
 {
     for(int x=0; x<N; x++){
@@ -114,6 +195,7 @@ void GamePanel::handleClick(int x, int y)
                 }
                 if(moved){
                     selected = nullptr;
+                    checkForLine(field->getX(), field->getY());
                     for(int i=0; i<3; i++){
                         createRandomBall();
                     }
@@ -153,11 +235,11 @@ void GamePanel::createRandomBall()
             if(randField-- <= 0){
                 board[i][j]->createBall(static_cast<Color::xColor>(rand() % 3));
                 balls++;
+                checkForLine(i,j);
                 return;
             }
         }
     }
-
 
 }
 
