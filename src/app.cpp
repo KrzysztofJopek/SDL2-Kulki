@@ -1,6 +1,5 @@
 #include "app.h"
 #include "simulation.h"
-#include <SDL2/SDL_image.h>
 
 SDL_Renderer* g_renderer;
 Simulation* g_simulation;
@@ -8,9 +7,6 @@ Simulation* g_simulation;
 App::App()
 {
     if(SDL_Init(SDL_INIT_VIDEO) == -1)
-        ERROR();
-    int imgFlags = IMG_INIT_PNG;
-    if(!(IMG_Init(imgFlags) & imgFlags))
         ERROR();
 
     controls = new Controls(this);
